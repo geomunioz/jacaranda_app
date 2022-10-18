@@ -1,0 +1,37 @@
+footer{
+    display: flex;
+    height: 100px;
+    background-color: var(--gray-color);
+    color: var(--light-color);
+    justify-content: space-between;
+    align-items: center;
+    padding-inline: 20px;
+    font-size: 1.4rem;
+    font-weight: 600;
+}
+
+.footer-logo{
+    max-width: 250px;
+}
+
+.footer-links{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.footer-links > ul,
+.footer-links > div{
+    margin-inline: 8px;
+}
+
+footer li a{
+    list-style: none;
+    color: var(--light-color);
+}
+
+.footer-icon{
+    font-size: 1.8em;
+    margin-top: 4px;
+    margin-right: 8px;
+}

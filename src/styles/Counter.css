@@ -1,0 +1,27 @@
+.container-counter{
+    max-width: max-content;
+    height: min-content;
+    border: 1px solid var(--dark-color);
+    border-radius: 4px;
+}
+
+.btn-counter{
+    width: 30px;
+    aspect-ratio: 1;
+    border: none;
+    background: white;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.btn-counter:hover{
+    cursor: pointer;
+}
+
+.input-counter{
+    max-width: 100px;
+    outline: none;
+    text-align: center;
+    font-size: 18px;
+    border: none;
+}

@@ -1,0 +1,69 @@
+.container-order{
+    width: 360px;
+    padding: 24px 16px;
+    box-sizing: border-box;
+    position: absolute;
+    right: 0;
+    background-color: white;
+    top: 70px;
+    bottom: 0;
+    border-radius: 6px;
+    border-left: 1px solid var(--color-gray1);
+    border-bottom: 1px solid var(--color-gray1);
+    z-index: 50;
+    
+}
+
+.order-title{
+    display: flex;
+    align-items: center;
+}
+
+.order-title .icon{
+    font-size: 1.8em;
+}
+
+.order-title .title{
+    font-size: 1.8em;
+    font-weight: bold;
+    padding-left: 8px;
+}
+
+.order-content{
+    height: calc(100% - 140px);
+    overflow-y: scroll;
+}
+
+.order-content::-webkit-scrollbar{
+    width: 6px;
+}
+
+.order-content::-webkit-scrollbar-track {
+    background: transparent;        /*rgb(232, 232, 232) color of the tracking area */
+}
+
+.order-content::-webkit-scrollbar-thumb {
+    background-color: #C1C1C1;    /* color of the scroll thumb */
+    border-radius: 20px;       /* roundness of the scroll thumb */
+}
+
+.order{
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 16px;
+    align-items: center;
+    background-color: var(--color-gray4);
+    margin-block: 12px;
+    border-radius: 8px;
+    padding: 16px 24px;
+}
+
+.order p span{
+	font-size: 18px;
+	font-weight: bold;
+}
+.order p{
+    font-size: 1.6em;
+	text-align: end;
+	font-weight: bold;
+}

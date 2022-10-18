@@ -1,0 +1,17 @@
+.page-orders{
+    max-width: 1200px;
+    min-height: 100vh;
+    margin: 0 auto;
+}
+
+.page-orders h1{
+    font-size: 18px;
+    margin-block: 20px;
+}
+
+.container-orders{
+    max-width: 1200px;
+    margin: 20px auto;
+    border: 1px solid var(--color-gray3);
+    border-radius: 8px;
+}

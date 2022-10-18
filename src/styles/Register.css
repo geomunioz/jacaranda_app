@@ -1,0 +1,17 @@
+.login-form .p-register::after,
+.login-form .p-register::before {
+    position: absolute;
+    top: 50%;
+    width: 45%;
+    height: 1px;
+    background: var(--color-yellowDark3);
+    content: '';
+}
+
+.login-form .p-register::before{
+    left: 0px;
+}
+
+.login-form .p-register::after{
+    right: 0px;
+}

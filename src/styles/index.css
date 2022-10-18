@@ -1,0 +1,42 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap');
+
+:root {
+  --color-yellow1: #FFD859;
+  --color-yellow2: #FFCF33;
+  --color-yellow3: #FFD752;
+  --color-yellow4: #FFEAA3;
+  --color-yellowDark1: #CF9E00;
+  --color-yellowDark2: #725802;
+  --color-yellowDark3: #4D3B00;
+  --color-gray1: #4D421F;
+  --color-gray2: #BFAC6F;
+  --color-gray3: #BFB491;
+  --color-gray4: #FFF9E5;
+  --light-color: #F2F2F2;
+  --dark-color: #000000;
+  --gray-color: #333333;
+  --primary-font: 'Montserrat', sans-serif;
+}
+
+* {
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+  text-decoration: none;
+  list-style: none;
+  font-family: var(--primary-font);
+}
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
