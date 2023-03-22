@@ -1,14 +1,16 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import '../styles/ShoppingItem.css';
 
-const ShoppingItem = () =>{
+const ShoppingItem = (payload:any) =>{
+    let total:number = payload.total;
     return (
         <article className='container-shoppingItem'>
-            <a href='#'>XACDFGTRE123</a>
-            <p>Estado de pedido</p>
-            <p>22/05/2022</p>
-            <p>Domicilio</p>
-            <p>$ 250.00</p>
+            <Link to={`/order-detail?idOrder=${payload.identificador}`}>{payload.identificador}</Link>
+            <p>{payload.estado}</p>
+            <p>En Tienda</p>
+            <p>{payload.fecha}</p>
+            <p>$ {total?.toFixed(2)}</p>
         </article>
     );
 }

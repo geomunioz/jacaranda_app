@@ -7,11 +7,16 @@ import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import LogoJacaranda from '../assets/icons/LogoJacaranda2.png';
 import '../styles/Header.css';
 import MyOrder from '../containers/MyOrder';
+import MenuLogin from '../containers/MenuLogin';
 import { UserAuth } from '../context/AuthContext';
+import { Link } from 'react-router-dom';
+import useUsersFunctions from '../hooks/useUsers';
 
-const Header = () => {
-    const { user, logOut } = UserAuth();
+const Header = (props:any) => {
+    // const {existUser,userCurrent} = useUsersFunctions();
+    const { user, logOut, userActual } = UserAuth();
     const [toggleOrders, setToggleOrders] = useState(false);
+    const [toggleMenuLogin, setToggleMenuLogin] = useState(false);
 
     const handleSignOut = async() => {
         try{
@@ -24,7 +29,9 @@ const Header = () => {
     return (
         <div>
             <nav className='navbar'>
-                <img className='navbar-logo' src={LogoJacaranda} alt="Logo Jacaranda" />
+                <Link to="/">
+                    <img className='navbar-logo' src={LogoJacaranda} alt="Logo Jacaranda" />
+                </Link>
                 <form className='navbar-search'>
                     <input
                         type="search" placeholder="Buscar producto" />
@@ -34,29 +41,50 @@ const Header = () => {
                 </form>
                 <div className='navbar-right'>
                     <ul>
-                        {user?.displayName ? (
+                        {userActual?.firtsName ? (
                             <li
                                 className='navbar-shoppingCar'
-                                onClick={() => setToggleOrders(!toggleOrders) }
+                                onClick={
+                                    () => {
+                                        console.log("toggleOrders" + toggleOrders)
+                                        setToggleOrders(!toggleOrders)
+                                        console.log("toggleOrders" + toggleOrders)
+                                        // if(toggleOrders){
+                                        //     setToggleMenuLogin(false)
+                                        //     console.log("toggleMenuLogin"+toggleMenuLogin)
+                                        // }
+
+                                    }
+                                }
                             >
                                 <FontAwesomeIcon icon={faCartShopping} />
                             </li>
                         ) : (
-                            <a 
-                                href='/register'
+                            <Link 
+                                to='/register'
                                 className='navbar-userAccount'
                             >
                                 <FontAwesomeIcon icon={faCartShopping} /> 
-                            </a>
+                            </Link>
                         )}
                         
 
-                        {user?.displayName ? (
+                        {userActual?.firtsName ? (
                             <li 
                                 className='navbar-userAccount'
+                                onClick={() => {
+                                    console.log("toggleMenuLogin"+toggleMenuLogin)
+                                        setToggleMenuLogin(!toggleMenuLogin)
+                                        console.log("toggleMenuLogin"+toggleMenuLogin)
+                                        // if(toggleOrders){
+                                        //     setToggleOrders(false)
+                                        //     console.log("toggleOrders" + toggleOrders)
+                                        // }
+                                    }
+                                }
                             >
                                 <FontAwesomeIcon icon={faCircleUser} /> 
-                                <p>{user.displayName}</p>
+                                <p>{userActual.firtsName}</p>
                             </li>
                         ) : (
                             <a 
@@ -82,7 +110,9 @@ const Header = () => {
                 <a href="">Limpieza</a>
                 <a href="">Mascotas</a>
             </div>
-            { toggleOrders && <MyOrder/> }
+            
+            { toggleOrders && <MyOrder carrito={props.carrito}/> }
+            { toggleMenuLogin && <MenuLogin/> }
         </div>
     );
 }

@@ -1,12 +1,14 @@
 import React from 'react';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
+import { UserAuth } from '../context/AuthContext';
 import '../styles/styles.css'
 
 const CheckoutData = () =>{
+    const { cart } = UserAuth();
     return (
         <div>
-            <Header />
+            <Header carrito={cart}/>
             <section className='container-page'>
                 <section className='login-form'>
                     <form action="" method="post">

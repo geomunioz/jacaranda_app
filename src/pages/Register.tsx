@@ -1,4 +1,4 @@
-import React,{useContext, useEffect} from 'react';
+import React,{useContext, useEffect, useState} from 'react';
 import LogoJacaranda from '../assets/icons/LogoJacaranda.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGoogle } from '@fortawesome/free-brands-svg-icons';
@@ -7,22 +7,33 @@ import '../styles/styles.css';
 import '../styles/Login.css';
 import '../styles/Register.css';
 import { useNavigate } from 'react-router-dom';
-import { app } from '../firebase';
+import useUsersFunctions from '../hooks/useUsers';
+import { app, auth } from '../firebase';
 import { getFirestore } from "firebase/firestore";
-import { collection, addDoc } from 'firebase/firestore';
+import useProductsFunctions from '../hooks/useProducts';
+import { IUser } from '../interfaces/IUser';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
 
 const db = getFirestore(app);
 
-interface User{
-    idUser: string;
-    firtsName: string;
-    lastName: string;
-    email: string;
+const initialUser:IUser = {
+    idUser: '',
+    firtsName:'',
+    lastName:'',
+    email: '',
+    admin:'false'
+
 }
 
 const Register = () => {
-    const { googleSignIn, user } = UserAuth();
+    const {addUser, addUserEmailAndPassword, getUser, userGet, existUser} = useUsersFunctions();
+    const { getProducts,almacen } = useProductsFunctions();
+    const { googleSignIn, user, setUserActual } = UserAuth();
     const navigate = useNavigate();
+
+    const [email, setEmail] = React.useState('');
+    const [pass, setPass] = React.useState('');
+    const [dataForm, setDataForm] = useState(initialUser);
 
     const handleGoogleSignIn = async () => {
         try{
@@ -33,30 +44,106 @@ const Register = () => {
     };
 
     const handleAddUser = async(props: any) => {
-        let user: User = {
-            idUser: props.uid,
-            firtsName: "Name",
-            lastName: "Last Name",
-            email: props.email
-        }
+        
+        await addUser(props);
+        getUser(user);
+    }
 
-        let newUser = JSON.stringify(user);
+    const sendAddUser =async (props:any) => {
+        console.log("sendAddUser: uid ->",props.uid);
+        dataForm.idUser = props.uid;
+        console.log("sendAddUser: ",dataForm);
+        await addUserEmailAndPassword(dataForm);
+        getUser(props);
 
-        try{
-            const docRef =  await addDoc(collection(db, "Users"),user);
-        }catch(error){
-            console.error("Error adding document");
+    }
+
+    const handleAddUserEmail = async () => {
+        try {
+            const respuestaEmail = await createUserWithEmailAndPassword(auth, dataForm.email,pass);
+            console.log("EmailAuth :",respuestaEmail);
+
+
+        } catch (error:any) {
+            console.log(error)
+        // setError(error.message)
+            if(error.code === 'auth/email-already-in-use'){
+                console.log('Usuario ya registrado...');
+               
+            }
+            if(error.code === 'auth/invalid-email'){
+                console.log('Email no válido');
+            }
         }
     }
 
-    useEffect(()=>{
-        console.log(user);
-        if(user!=null ){
-            handleAddUser(user);
-            navigate('/');
+    const handleChange = (event:any) =>{
+        const {name, value} = event.target;
+        console.log("name:",name,"value:",value);
+
+        const newUserForm = {
+            ...dataForm,
+            [name]: value
         }
 
-    },[user]);
+        console.log("newUserForm: ",newUserForm);
+
+        setDataForm(newUserForm);
+    }
+
+    useEffect(()=>{
+        console.log("Register useEffect:",user);
+        let getUserValue = getUser(user);
+        
+        setTimeout(()=>{
+            console.log("Valore devuelto por getUser:",getUserValue);
+            console.log("condicion 1: != ",user!=null);
+            console.log("condicion 1: !==",user!==null);
+            console.log("Condicion 2: ==",user != undefined);
+            console.log("Condicion 2: ===",user !== undefined);
+            console.log("Condicion 5: ==",existUser==false);
+            console.log("Condicion 5: ===",existUser===false);
+
+
+                console.log("Value para registrar: ", userGet?.idUser)
+                console.log("Value userGet EN REGISTRO: ", userGet)
+            // if(user!=null && user!=undefined && userGet==undefined && typeof userGet=='undefined'){
+            if(user!=null && user!=undefined && existUser===false){
+                console.log("condicion 1.1: != ",user!=null);
+                console.log("condicion 1.2: !==",user!=undefined);
+                console.log("Condicion 1.3: VALUE EXISTUSER ==",existUser);
+                
+
+                console.log("Value userGet:",userGet);
+                console.log("Value typeof userGet: ",typeof userGet);
+
+                console.log("Voy a registrar");
+                if(user.displayName != null){
+                    handleAddUser(user);
+                    // navigate('/');
+                }else{
+                    sendAddUser(user);
+                    // navigate('/'); comentar para validar que se registre primero
+                }
+            }
+        },3000)
+    },[user,existUser]);
+
+    useEffect(() =>{
+        setTimeout(()=>{
+            console.log("userGet?.idUser --->",userGet?.idUser);
+            console.log("userGet --->",userGet);
+            console.log("typeOf userGet.Id --->",typeof userGet?.idUser);
+            // if(userGet?.idUser!='' && userGet!=undefined && typeof userGet!='undefined'){
+            if(userGet?.idUser!='' && userGet!=undefined && existUser===true){
+                console.log("El usuario existe ----------->");
+                setUserActual(userGet);
+                navigate('/');
+            }
+        })
+        
+    },[userGet,existUser] )
+
 
     return(
         <section className='container-page'>
@@ -64,18 +151,20 @@ const Register = () => {
                 <img src={LogoJacaranda} alt="Logo Jacaranda" />
                 <button className='btn btn-google' onClick={handleGoogleSignIn }><FontAwesomeIcon icon={faGoogle} /> Registrarse con Google</button>
                 <p className='p-register'>o</p>
-                <form action="">
+                <form>
                     <label 
-                        htmlFor="name" 
+                        htmlFor="firtsName" 
                         className="label-form"
                     >
                         Nombre
                     </label>
                     <input 
                         type="text" 
-                        name="name" 
+                        name="firtsName" 
                         placeholder="Nombre" 
                         className="input input-email" 
+                        value={dataForm.firtsName}
+                        onChange={handleChange}
                     />
 
                     <label 
@@ -89,6 +178,8 @@ const Register = () => {
                         name="lastName" 
                         placeholder="Apellido" 
                         className="input input-email" 
+                        value={dataForm.lastName}
+                        onChange={handleChange}
                     />
 
                     <label 
@@ -102,6 +193,8 @@ const Register = () => {
                         name="email" 
                         placeholder="email@example.com" 
                         className="input input-email" 
+                        value={dataForm.email}
+                        onChange={handleChange}
                     />
                     <label 
                         htmlFor="password" 
@@ -114,10 +207,13 @@ const Register = () => {
                         name="password" 
                         placeholder="*********" 
                         className="input input-password" 
+                        value={pass}
+                        onChange={(event:any)=>setPass(event.target.value)}
                     />
                     <button
-                        type="submit"
+                        type="button"
                         className=" btn btn-primary login-button"
+                        onClick={handleAddUserEmail}
                     >
                         Registrarse
                     </button>

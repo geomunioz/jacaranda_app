@@ -3,17 +3,15 @@ import ProductItem from '../components/ProductItem';
 import ProductSlide from './ProductSlide';
 import '../styles/ProductSlideList.css';
 
-const ProductList = () => {
+const ProductList = (props:any) => {
+
     return (
         <section className='main-container'>
-
-            <ProductSlide />
-            <ProductSlide />
-            <ProductSlide />
-            <ProductSlide />
-            <ProductSlide />
-            <ProductSlide />
-            <ProductSlide />
+            {
+                props.category.map((categoria: any) =>(
+                    <ProductSlide key={categoria} text={categoria} valores={props.almacen}/>
+                ))
+            }
         </section>
     );
 }

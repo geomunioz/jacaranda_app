@@ -11,25 +11,25 @@ import "../styles/Gallery.css";
 import { Navigation } from "swiper";
 import imageSlide from "../assets/images/fotoProduct.jpg";
 
-const Gallery = () => {
+const Gallery = (props:any) => {
     return(
         <Swiper navigation={true} modules={[Navigation]} className="mySwiper swiperGallery">
-            <SwiperSlide>
+            <SwiperSlide className='swiper-slide gallerySlide'>
                 <figure>
-                    <img src={imageSlide} alt="" />
+                    <img src={props.urlImg} alt="Imagen de producto" />
                 </figure>
-                <button className='slide-delete'>
-                    <FontAwesomeIcon icon={ faTrash } className="icon" />
-                </button>
+                {
+                    props.tipo !== 'detalle' && <button className='slide-delete'> <FontAwesomeIcon icon={faTrash} className="icon" /> </button>
+                }
             </SwiperSlide>
-            <SwiperSlide>Slide 2</SwiperSlide>
+            {/* <SwiperSlide>Slide 2</SwiperSlide>
             <SwiperSlide>Slide 3</SwiperSlide>
             <SwiperSlide>Slide 4</SwiperSlide>
             <SwiperSlide>Slide 5</SwiperSlide>
             <SwiperSlide>Slide 6</SwiperSlide>
             <SwiperSlide>Slide 7</SwiperSlide>
             <SwiperSlide>Slide 8</SwiperSlide>
-            <SwiperSlide>Slide 9</SwiperSlide>
+            <SwiperSlide>Slide 9</SwiperSlide> */}
         </Swiper>
     );
 }

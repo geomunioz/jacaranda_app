@@ -5,16 +5,25 @@ import fotoProduct from '../assets/images/fotoProduct.jpg';
 import '../styles/index.css';
 import '../styles/styles.css';
 import '../styles/OrderItem.css';
+import { IProduct } from '../interfaces/IProduct';
+import { UserAuth } from '../context/AuthContext';
 
-const OrderItem = () => {
+const OrderItem = (props:any) => {
+    const {cart, setCart} = UserAuth();
+    const handleRemove = () =>{
+        const updatedCart = [...cart]; // Hacer una copia del arreglo original para no modificarlo directamente
+        updatedCart.splice(props.indetificador, 1); // Eliminar el elemento en el índice n del arreglo
+        setCart(updatedCart);
+    }
+
     return (
         <div className="OrderItem">
             <figure>
-                <img src={fotoProduct} alt="{product.title}" />
+                <img src={props.details.image} alt="{product.title}" />
             </figure>
-            <p>Product title</p>
-            <p>$ 150.00</p>
-            <FontAwesomeIcon className='icon' icon={faXmark}/>
+            <p>{props.details.name}</p>
+            <p>$ {props.details.price}</p>
+            <FontAwesomeIcon className='icon' icon={faXmark} onClick={handleRemove}/>
         </div>
     );
 }

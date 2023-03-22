@@ -2,14 +2,15 @@ import React from 'react';
 import ProductItem from '../components/ProductItem';
 import '../styles/ProductList.css';
 
-const ProductList = () =>{
+const ProductList = (props:any) =>{
     return (
         <section className='productList'>
-            <ProductItem/>
-            <ProductItem/>
-            <ProductItem/>
-            <ProductItem/>
-            <ProductItem/>
+            {
+                props.lista.map((item:any) => (
+                    <ProductItem key={item.id} urlId={item.id} url={item.image} price={item.price} title={item.name} estilo={'relative'}/>
+                ))
+            }
+            
         </section>
     );
 }
