@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleUser } from '@fortawesome/free-regular-svg-icons';
 import { faCartShopping } from '@fortawesome/free-solid-svg-icons';
@@ -20,11 +20,20 @@ const Header = (props:any) => {
 
     const handleSignOut = async() => {
         try{
+            setToggleOrders(!toggleOrders)
+            setToggleMenuLogin(!toggleMenuLogin)
             await logOut();
         }catch(error){
             console.log(error);
         }
     }
+
+    useEffect(()=>{
+        if(!userActual?.firtsName){
+            setToggleOrders(false); // Ocultar el componente <MyOrder>
+            setToggleMenuLogin(false);
+        }
+    })
 
     return (
         <div>

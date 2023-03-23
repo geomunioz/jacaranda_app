@@ -7,11 +7,16 @@ import '../styles/Login.css';
 import { UserAuth } from '../context/AuthContext';
 import useUsersFunctions from '../hooks/useUsers';
 import { useNavigate } from 'react-router-dom';
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '../firebase';
 
 const Login = () =>{
     const navigate = useNavigate();
     const { googleSignIn, logOut, user, setUser, setUserActual } = UserAuth();
     const {addUser, getUser, userGet, existUser} = useUsersFunctions();
+
+    const [email, setEmail] = React.useState('');
+    const [pass, setPass] = React.useState('');
 
     const handleGoogleSignIn = async () => {
         try{
@@ -47,6 +52,26 @@ const Login = () =>{
         //     console.error("Error adding document");
         // }
         addUser(props);
+    }
+
+    const handleLoginUser = async () => {
+        try {
+            const responseLogin = await signInWithEmailAndPassword(auth,email, pass)  
+            console.log("ResponseLogin obtuvo: ",responseLogin);
+            setEmail('');
+            setPass('');
+            // navigate('/');
+            getUser(user);
+        } catch (error: any) {
+            if(error.code === 'auth/user-not-found'){
+                alert('Usuario o contraseña incorrecta')
+            }
+            if(error.code === 'auth/wrong-password'){
+                alert('Usuario o contraseña incorrecta')
+            }
+            console.log(error.code)
+            console.log(error.message)   
+        }
     }
 
     useEffect(()=>{
@@ -107,7 +132,7 @@ const Login = () =>{
                 <img src={LogoJacaranda} alt="Logo Jacaranda" />
                 <button className='btn btn-google' onClick={ handleGoogleSignIn }><FontAwesomeIcon icon={faGoogle} /> Iniciar Sesión con Google</button>
                 <p className='p-login'>o ingresa con email</p>
-                <form action="">
+                <form>
                     <label 
                         htmlFor="email" 
                         className="label-form"
@@ -119,6 +144,8 @@ const Login = () =>{
                         name="email" 
                         placeholder="email@example.com" 
                         className="input input-email" 
+                        value={email}
+                        onChange={(event:any)=>setEmail(event.target.value)}
                     />
                     <label 
                         htmlFor="password" 
@@ -131,10 +158,13 @@ const Login = () =>{
                         name="password" 
                         placeholder="*********" 
                         className="input input-password" 
+                        value={pass}
+                        onChange={(event:any)=>setPass(event.target.value)}
                     />
                     <button
-                        type="submit"
+                        type="button"
                         className=" btn btn-primary login-button"
+                        onClick={handleLoginUser}
                     >
                         Iniciar Sesión
                     </button>
