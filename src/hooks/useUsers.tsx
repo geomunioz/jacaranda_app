@@ -101,7 +101,7 @@ const useUsersFunctions = () =>{
     const getUser = async (payload:any) => {
         
         console.log("getUser function input", payload);
-        console.log("getUser payload.uid: ",payload.uid);
+        // console.log("getUser payload.uid: ",payload.uid);
         const docRef = doc(db,"Users",payload.uid);
         const docSnap = await getDoc(docRef);
 
