@@ -1,16 +1,19 @@
 {
   "files": {
-    "main.css": "/jacaranda_app_ts/static/css/main.e6b56608.css",
-    "main.js": "/jacaranda_app_ts/static/js/main.b8b0f8a2.js",
+    "main.css": "/jacaranda_app_ts/static/css/main.a70d381a.css",
+    "main.js": "/jacaranda_app_ts/static/js/main.4a746f9d.js",
     "static/js/787.e75eda18.chunk.js": "/jacaranda_app_ts/static/js/787.e75eda18.chunk.js",
+    "static/media/vinos.png": "/jacaranda_app_ts/static/media/vinos.c30001f3b5c3ff00a516.png",
+    "static/media/verduras.jpg": "/jacaranda_app_ts/static/media/verduras.7535a96ec3af8fafaa7d.jpg",
+    "static/media/banner.png": "/jacaranda_app_ts/static/media/banner.24c1c80b0466b226b850.png",
     "static/media/notfound.png": "/jacaranda_app_ts/static/media/notfound.7cc115a657a7419eb31a.png",
     "index.html": "/jacaranda_app_ts/index.html",
-    "main.e6b56608.css.map": "/jacaranda_app_ts/static/css/main.e6b56608.css.map",
-    "main.b8b0f8a2.js.map": "/jacaranda_app_ts/static/js/main.b8b0f8a2.js.map",
+    "main.a70d381a.css.map": "/jacaranda_app_ts/static/css/main.a70d381a.css.map",
+    "main.4a746f9d.js.map": "/jacaranda_app_ts/static/js/main.4a746f9d.js.map",
     "787.e75eda18.chunk.js.map": "/jacaranda_app_ts/static/js/787.e75eda18.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.e6b56608.css",
-    "static/js/main.b8b0f8a2.js"
+    "static/css/main.a70d381a.css",
+    "static/js/main.4a746f9d.js"
   ]
 }
